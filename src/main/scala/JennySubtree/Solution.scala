@@ -35,7 +35,7 @@ object Solution extends Solution[Int] {
     /*
      * Write your code here.
      */
-    1
+    ???
   }
 }
 
