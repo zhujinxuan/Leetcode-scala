@@ -13,11 +13,12 @@ object Solution extends Solution[BigInt] {
     }
 }
 
-sealed trait Solution[T] {
+sealed trait Solution[T](implicit num: Numeric[T]) {
   import scala.collection.immutable.TreeMap
+  import scala.language.implicitConversions
+  import num._
 
-  case class Ra(count : Int, min : T, max : T)(implicit nn : Numeric[T]) {
-    import nn._
+  case class Ra(count : Int, min : T, max : T) {
     def drop(x : T) : Ra = Ra(count + 1, min + x, max + x)
   }
 
@@ -32,8 +33,7 @@ sealed trait Solution[T] {
     def drop(x : T) : Res = Res(count + s.count(ra), s, ra.drop(x))
   }
 
-  def initStore(nums : Array[T])(implicit nn : Numeric[T]) : Store = {
-    import nn._
+  def initStore(nums : Array[T]) : Store = {
     val sum0 : T = nums.foldLeft(zero) {_ + _}
     val (tm : TM,_,_) = nums.foldRight[(TM, T, Int)]( (TreeMap(), sum0, nums.size)) {
       (a, m) => {
