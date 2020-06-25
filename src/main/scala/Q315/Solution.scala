@@ -4,8 +4,7 @@ object Solution extends Solution[Int] {
 
   def countSmaller(nums: Array[Int]): List[Int] = {
     val(res,_) = nums.foldRight((List[Int](), Empty : BT)) {
-      (a, memo) => {
-        val (r, tree) = memo
+      case (a, (r, tree)) => {
         val (head, t) = tree insert a
         (head::r, t)
       }
