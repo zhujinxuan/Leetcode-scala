@@ -1,8 +1,12 @@
-ThisBuild / scalaVersion := "2.12.7"
-ThisBuild / organization := "com.example"
+val dottyVersion = "0.25.0-RC2"
 
-lazy val hello = (project in file("."))
+lazy val root = project
+  .in(file("."))
   .settings(
-    name := "Hello",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
-    )
+    name := "dotty-simple",
+    version := "0.1.0",
+
+    scalaVersion := dottyVersion,
+
+    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+  )
