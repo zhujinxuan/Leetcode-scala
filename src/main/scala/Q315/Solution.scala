@@ -3,6 +3,7 @@ package Q315
 object Solution {
 
   def countSmaller(nums: Array[Int]): List[Int] = {
+    ???
   }
 
 }
