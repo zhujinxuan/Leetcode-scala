@@ -15,16 +15,14 @@ object Solution extends Solution[Int] {
 
 }
 
-sealed trait Solution[T: Ordering] {
+sealed trait Solution[T] {
 
   import math.Ordered.orderingToOrdered
-  sealed trait BT {
-    val size : Int = this match {
-      case Empty => 0
-      case Tree(_, l, r, c) => l.size + r.size + c
-    }
 
-    def insert(t : T) : (Int, BT) = this match {
+  sealed trait BT {
+    val size : Int
+
+    def insert(t : T)(implicit ord : Ordering[T]) : (Int, BT) = this match {
       case Empty => (0, Tree(t, Empty, Empty, 1))
       case Tree(v, l, r, c) => {
         if (t == v) {
@@ -42,7 +40,11 @@ sealed trait Solution[T: Ordering] {
     }
   }
 
-  case object Empty extends BT;
-  case class Tree(v: T, l: BT, r: BT, count : Int) extends BT;
+  case object Empty extends BT {
+    val size = 0
+  }
+  case class Tree(v: T, l: BT, r: BT, count : Int) extends BT {
+    val size = l.size + r.size + count
+  }
 
 }
